@@ -1,14 +1,22 @@
 import { getCharacters } from "../apis/swapi";
 
 export const fetchCharacters = () => async (dispatch) => {
-    const response = await getCharacters
+    await getCharacters
         .then(response => response.json())
         .then((data) => {
-            return data
+            console.log(data)
+            dispatch({ type: 'FETCH_CHARACTERS', payload: data.results })
         })
         .catch(error => {
             console.error('Failing to fetch characters from API')
         })
+}
 
-    dispatch({type: 'FETCH_CHARACTERS', payload: response.results})
+export const selectCharacter = (character) => {
+    return {
+        type: 'SELECTED_CHARACTER',
+        payload: character
+    }
+
+
 }

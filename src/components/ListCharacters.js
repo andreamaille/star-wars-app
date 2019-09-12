@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCharacters } from '../actions'
+import { fetchCharacters, selectCharacter } from '../actions'
+import CharacterView from './CharacterView'
+import { jsx, css } from '@emotion/core'
+import { Link } from 'react-router-dom'
 
 class ListCharacters extends Component {
     componentDidMount() {
@@ -8,11 +11,18 @@ class ListCharacters extends Component {
     }
 
     renderList() {
-        return this.props.characters.map((character, index) => {
+        return this.props.characters.map((character) => {
+            const index = character.name.replace(/\s+/g, '')
+            
             return (
-                <div className="character-profile" key={index}>
+                <div className="character-profile" key={character.url}>
                     <div className="character-info">
-                        <h3>{character.name}</h3>
+                        <Link 
+                            to={`/characters/${index}`} 
+                            onClick={() => this.props.selectCharacter(character)}
+                        >
+                            <h3>{character.name}</h3>
+                        </Link>
                         <p>Birth Year: {character.birth_year}</p>
                         <p>Height: {character.height}</p>
                         <p>Mass: {character.mass}</p>
@@ -25,7 +35,6 @@ class ListCharacters extends Component {
     render() {
         return (
             <main>
-                yo
                 {this.renderList()}
             </main>
         )
@@ -40,5 +49,5 @@ const mapStateToProps = (state) => {
 
 export default connect(
     mapStateToProps,
-    { fetchCharacters }
+    { fetchCharacters, selectCharacter}
     )(ListCharacters)
