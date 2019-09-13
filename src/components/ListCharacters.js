@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCharacters, selectCharacter } from '../actions'
+import { fetchCharacters, selectCharacter, retrieveItems, nextPage, previousPage } from '../actions'
 import CharacterView from './CharacterView'
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
@@ -11,7 +11,11 @@ class ListCharacters extends Component {
     }
 
     renderList() {
-        return this.props.characters.map((character) => {
+        const indexOfLastItem = this.props.currentPage * this.props.itemsPerPage;
+        const indexOfFirstItem = indexOfLastItem - this.props.itemsPerPage;
+        const currentItems = this.props.characters.slice(indexOfFirstItem, indexOfLastItem);
+
+        return currentItems.map((character) => {
             const index = character.name.replace(/\s+/g, '')
             
             return (
@@ -36,6 +40,8 @@ class ListCharacters extends Component {
         return (
             <main>
                 {this.renderList()}
+                <button onClick={() => this.props.previousPage()}>Previous</button>
+                <button onClick={() => this.props.nextPage()}>Next</button>
             </main>
         )
     }
@@ -43,11 +49,18 @@ class ListCharacters extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        characters: state.characters
+        characters: state.characters,
+        currentPage: state.currentPage,
+        itemsPerPage: state.itemsPerPage
     }
 }
 
 export default connect(
     mapStateToProps,
-    { fetchCharacters, selectCharacter}
+    {   fetchCharacters, 
+        selectCharacter,
+        retrieveItems,
+        nextPage,
+        previousPage
+    }
     )(ListCharacters)
