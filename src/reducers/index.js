@@ -5,29 +5,23 @@ import selectedCharacterReducer from './selectedCharacterReducer'
 const getCharacters = (state = [], action) => {
     switch (action.type) {
         case 'FETCH_CHARACTERS':
-
-            // let characterResults = []
-
-            // for (let item of action.payload) {
-            //     const id = item.name.replace(/\s+/g, '')
-
-            //     characterResults = [
-            //             ...characterResults,
-            //             {[id]: item}
-            //     ]
-
-            // }
-
-            // return {
-            //     ...state, 
-            //     ...characterResults
-            // }
-
             return action.payload
         default:
             return state
     }
 }
+
+const getSpaceships = (state = [], action) => {
+    switch (action.type) {
+        case 'FETCH_SPACESHIPS':
+            return action.payload
+        default:
+            return state
+    }
+}
+
+
+
 
 const selectedCharacter = (state = null, action) => {
     switch (action.type) {
@@ -51,7 +45,7 @@ const currentPage = (page = 1, action) => {
     }
 }
 
-const itemsPerPage = (page = 3, action) => {
+const itemsPerPage = (page = 20, action) => {
     switch (action.type) {
         case 'ITEMS_PER_PAGE':
             return page
@@ -62,6 +56,7 @@ const itemsPerPage = (page = 3, action) => {
 
 export default combineReducers ({
     characters: getCharacters,
+    spaceships: getSpaceships,
     selectedCharacter: selectedCharacter,
     currentPage: currentPage,
     itemsPerPage: itemsPerPage
