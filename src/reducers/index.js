@@ -29,59 +29,52 @@ const selectedCharacter = (state = [], action) => {
     }
 }
 
-const currentPage = (page = 1, action) => {
+const updatePagination = (state = {}, action) => {
     switch (action.type) {
-        case 'CURRENT_PAGE':
-            return page
+        case 'UPDATE_PAGINATION':
+            return state
+
         case 'NEXT_PAGE': 
-            return page + 1
-        case 'PREVIOUS_PAGE':
-            if (page === 1) {
-                return page 
-            } else {
-                return page - 1
+            const page = {...state}
+            return {
+                ...state,
+                currentPage: page.currentPage + 1
             }
-        default: 
-            return page
-    }
-}
+        case 'PREVIOUS_PAGE':
+            const currentPage = {...state}
 
-const itemsPerPage = (page = 9, action) => {
-    switch (action.type) {
-        case 'ITEMS_PER_PAGE':
-            return page
+            if (currentPage.currentPage === 1) {
+                return {
+                    ...state,
+                    currentPage: currentPage.currentPage
+                }
+            } else {
+                return {
+                    ...state,
+                    currentPage: currentPage.currentPage - 1
+                }
+            }
+        case 'TOTAL_PAGES': {
+            const currentPages = {...state}
+
+            const total = Math.floor(action.payload.length / currentPages.itemsPerPage)
+
+            return {
+                ...state,
+                totalPages: total
+            }
+        }
         default:
-            return page
+            return {
+                currentPage: 1,
+                itemsPerPage: 10
+            }
     }
 }
-
-// const pagination = (state = {}, action) => {
-//     switch (action.type) {
-//         case 'PAGINATION':
-//             const indexOfLastItem = action.payload.currentPage * action.payload.itemsPerPage
-
-//             const indexOfFirstItem = indexOfLastItem - action.payload.itemsPerPage
-
-//             const currentItems = action.payload.array.slice(indexOfFirstItem, indexOfLastItem)
-
-//             console.log(currentItems)
-
-//             return {
-//                 currentPage: action.payload.currentPage,
-//                 itemsPerPage: action.payload.itemsPerPage,
-//                 currentItems: currentItems
-//             }
-
-
-//         default:
-//             return state
-//     }
-// }
 
 export default combineReducers ({
     characters: getCharacters,
     spaceships: getSpaceships,
     selectedCharacter: selectedCharacter,
-    currentPage: currentPage,
-    itemsPerPage: itemsPerPage,
+    currentPagination: updatePagination
 })

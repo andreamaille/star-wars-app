@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCharacters, selectCharacter, retrieveItems, nextPage, previousPage, fetchSpaceships } from '../actions'
+import { fetchCharacters, selectCharacter, fetchSpaceships, getPagination, totalPages } from '../actions'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
@@ -32,27 +32,36 @@ class ListCharacters extends Component {
             itemsPerPage
         } = this.props 
 
-        let completeList = this.combineArray(spaceships, characters)
+        const completeList = this.combineArray(spaceships, characters)
 
+        this.props.totalPages(completeList)
+
+        //Pagination
         const indexOfLastItem = currentPage * itemsPerPage // 10
         const indexOfFirstItem = indexOfLastItem - itemsPerPage // 0
         const currentItems = completeList.slice(indexOfFirstItem, indexOfLastItem)
 
-        return currentItems.map((item, index) => {
+
+
+
+
+
+        return currentItems.map((item) => {
             const key = item.name.replace(/\s+/g, '')
-            
+
             if (!item.birth_year) {
                 return (
                     <div css={listItem} key={item.model}>
                         <h2 css={title}>🚀🚀 {item.name} 🚀🚀</h2>
                     </div>
                 )
+
             } else {
                 return (
                     <div  key={item.url}>
                         <div css={listItem} className="character-info">
                             <Link
-                                to={`/characters/${item.created}`}
+                                to={`/characters/${key}`}
                                 css={characterName}
                                 onClick={() => this.props.selectCharacter(item)}
                             >
@@ -88,8 +97,8 @@ const mapStateToProps = (state) => {
     return {
         characters: state.characters,
         spaceships: state.spaceships,
-        currentPage: state.currentPage,
-        itemsPerPage: state.itemsPerPage
+        currentPage: state.currentPagination.currentPage,
+        itemsPerPage: state.currentPagination.itemsPerPage
     }
 }
 
@@ -98,11 +107,13 @@ export default connect(
     {   fetchCharacters, 
         selectCharacter,
         fetchSpaceships,
-        retrieveItems,
-        nextPage,
-        previousPage, 
+        getPagination,
+        totalPages
     }
     )(ListCharacters)
+
+
+
 
 // Style
 const mainContent = css({

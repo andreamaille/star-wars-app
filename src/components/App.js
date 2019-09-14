@@ -2,7 +2,7 @@ import React from 'react'
 import Header from './Header'
 import ListCharacters from './ListCharacters'
 import CharacterView from './CharacterView'
-import { BrowserRouter, Route, Link } from 'react-router-dom'
+import { BrowserRouter, Route } from 'react-router-dom'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 
@@ -13,8 +13,8 @@ const App = () => {
             <BrowserRouter>
                 <div css={wrapper}>
                     <Header />
-                    <Route path="/" exact component={ListCharacters} />
-                    <Route path="/characters/:name" exact component={CharacterView} />
+                    <Route exact path="/" component={ListCharacters} />
+                    <Route path="/characters/:name" component={CharacterView} />
                 </div>
             </BrowserRouter>
         </div>
