@@ -12,7 +12,7 @@ const Preloader = () => {
                 color="#ffdf1d"
                 height={150}
                 width={150}
-                timeout={3000} //3 secs
+                timeout={3000}
             />
         </div>
     )
@@ -21,7 +21,10 @@ const Preloader = () => {
 export default Preloader
 
 
+
+
+// Style
+
 const preloader = css({
-    width: '40%',
-    margin: '0 auto'
+    textAlign: 'center'
 })

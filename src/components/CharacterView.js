@@ -3,13 +3,9 @@ import { connect } from 'react-redux'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
-
+import ListCharacters from './ListCharacters';
 
 const CharacterView = ({ character }) => {
-    if (!character) {
-        return null
-    }
-    
     return (
         <div css={mainContent}>
             <p css={title}>Character Details for {character.name}</p>

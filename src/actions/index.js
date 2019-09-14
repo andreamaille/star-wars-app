@@ -26,6 +26,7 @@ export const fetchCharacters = () => async (dispatch) => {
         type: 'FETCH_CHARACTERS',
         payload: characters
     })
+
 }
 
 
@@ -50,6 +51,18 @@ export const selectCharacter = (character) => {
         payload: character
     }
 }
+
+// export const getPagination = (array) => {
+//     return {
+//         type: 'PAGINATION',
+//         payload: {
+//             currentPage: 1,
+//             itemsPerPage: 3, 
+//             array: array
+//         }
+//     }
+// }
+
 
 export const currentPage = (page) => {
     return {

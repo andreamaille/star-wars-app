@@ -5,12 +5,14 @@ import { fetchCharacters, selectCharacter, retrieveItems, nextPage, previousPage
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
 import Preloader from './Preloader.js'
-
+import Buttons from './Buttons.js'
 
 class ListCharacters extends Component {
     componentDidMount() {
-        this.props.fetchCharacters()
-        this.props.fetchSpaceships()
+        if (!this.props.characters.length) {
+            this.props.fetchCharacters()
+            this.props.fetchSpaceships()
+        }
     }
 
     spliceArray = (array, element, index) => {
@@ -50,7 +52,7 @@ class ListCharacters extends Component {
                     <div  key={item.url}>
                         <div css={listItem} className="character-info">
                             <Link
-                                to={`/characters/${key}`}
+                                to={`/characters/${item.created}`}
                                 css={characterName}
                                 onClick={() => this.props.selectCharacter(item)}
                             >
@@ -71,13 +73,10 @@ class ListCharacters extends Component {
     render() {
         return (
             <div >
-                {!this.props.characters.length || !this.props.spaceships ? <Preloader /> :
+                {!this.props.characters.length || !this.props.spaceships.length ? <Preloader /> :
                     <div css={mainContent}>
                         <div>{this.renderList()}</div>
-                        <div css={buttonContainer}>
-                            <button css={button} onClick={() => this.props.previousPage()}>Previous</button>
-                            <button css={button} onClick={() => this.props.nextPage()}>Next</button>
-                        </div>
+                        <Buttons />
                     </div>
                 }
             </div>
@@ -104,7 +103,6 @@ export default connect(
         previousPage, 
     }
     )(ListCharacters)
-
 
 // Style
 const mainContent = css({
@@ -146,18 +144,4 @@ const statItem = css({
 const title = css({
     textAlign: 'center',
     fontSize: '30px'
-})
-
-const buttonContainer = css({
-    width:'50%',
-    margin: '0 auto',
-    padding: '20px 0'
-})
-
-const button = css({
-    padding: '10px',
-    width:'calc(100% / 2)',
-    color: '#1c1f22',
-    border: '2px solid #1c1f22',
-    backgroundColor: '#ffdf1d'
 })

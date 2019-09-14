@@ -18,9 +18,11 @@ const getSpaceships = (state = [], action) => {
     }
 }
 
-const selectedCharacter = (state = null, action) => {
+const selectedCharacter = (state = [], action) => {
     switch (action.type) {
         case 'SELECTED_CHARACTER':
+            return action.payload
+        case 'DIRECT_ROUTE':
             return action.payload
         default:
             return state
@@ -34,10 +36,10 @@ const currentPage = (page = 1, action) => {
         case 'NEXT_PAGE': 
             return page + 1
         case 'PREVIOUS_PAGE':
-            if (page = 0) {
+            if (page === 1) {
                 return page 
             } else {
-                return page + 1
+                return page - 1
             }
         default: 
             return page
@@ -53,10 +55,33 @@ const itemsPerPage = (page = 9, action) => {
     }
 }
 
+// const pagination = (state = {}, action) => {
+//     switch (action.type) {
+//         case 'PAGINATION':
+//             const indexOfLastItem = action.payload.currentPage * action.payload.itemsPerPage
+
+//             const indexOfFirstItem = indexOfLastItem - action.payload.itemsPerPage
+
+//             const currentItems = action.payload.array.slice(indexOfFirstItem, indexOfLastItem)
+
+//             console.log(currentItems)
+
+//             return {
+//                 currentPage: action.payload.currentPage,
+//                 itemsPerPage: action.payload.itemsPerPage,
+//                 currentItems: currentItems
+//             }
+
+
+//         default:
+//             return state
+//     }
+// }
+
 export default combineReducers ({
     characters: getCharacters,
     spaceships: getSpaceships,
     selectedCharacter: selectedCharacter,
     currentPage: currentPage,
-    itemsPerPage: itemsPerPage
+    itemsPerPage: itemsPerPage,
 })
