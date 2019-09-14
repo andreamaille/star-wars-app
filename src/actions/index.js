@@ -29,8 +29,6 @@ export const fetchCharacters = () => async (dispatch) => {
 
 }
 
-
-
 export const fetchSpaceships = () => async (dispatch) => {
     await getSpaceships
         .then(response => response.json())
@@ -52,18 +50,6 @@ export const selectCharacter = (character) => {
     }
 }
 
-// export const getPagination = (array) => {
-//     return {
-//         type: 'PAGINATION',
-//         payload: {
-//             currentPage: 1,
-//             itemsPerPage: 3, 
-//             array: array
-//         }
-//     }
-// }
-
-
 export const currentPage = (page) => {
     return {
         type: 'CURRENT_PAGE',
@@ -71,22 +57,29 @@ export const currentPage = (page) => {
     }
 }
 
-export const retrieveItems = (itemsPerPage) => {
+export const nextPage = () => {
     return {
-        type: 'ITEMS_PER_PAGE',
-        payload: itemsPerPage
+        type: 'NEXT_PAGE'
     }
 }
 
-export const nextPage = (max) => {
-    return {
-        type: 'NEXT_PAGE',
-        payload: max
-    }
-}
-
-export const previousPage = (page) => {
+export const previousPage = () => {
     return {
         type: 'PREVIOUS_PAGE'
+    }
+}
+
+export const getPagination = (array) => {
+    return {
+        type: 'UPDATE_PAGINATION',
+        payload: array
+    }
+}
+
+
+export const totalPages = (array) => {
+    return {
+        type: 'TOTAL_PAGES',
+        payload: array
     }
 }
