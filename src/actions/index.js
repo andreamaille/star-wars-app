@@ -10,14 +10,12 @@ export const fetchCharacters = () => async (dispatch) => {
         })
         .then(function (data){
             for (let item of data.results) {
-
                 characters = [
                     ...characters,
                     item
                 ]
             }
         })
-        
         .catch(error => {
             console.error('Failing to fetch characters from API')
             console.error(`Yo Andy, remember your internet goes out all the time so why don't you check there first`)
@@ -29,6 +27,7 @@ export const fetchCharacters = () => async (dispatch) => {
         payload: characters
     })
 }
+
 
 
 export const fetchSpaceships = () => async (dispatch) => {
@@ -44,7 +43,6 @@ export const fetchSpaceships = () => async (dispatch) => {
             console.error('Failing to fetch spaceships from API')
         })
 }
-
 
 export const selectCharacter = (character) => {
     return {
@@ -67,9 +65,10 @@ export const retrieveItems = (itemsPerPage) => {
     }
 }
 
-export const nextPage = (page) => {
+export const nextPage = (max) => {
     return {
-        type: 'NEXT_PAGE'
+        type: 'NEXT_PAGE',
+        payload: max
     }
 }
 

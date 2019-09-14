@@ -1,6 +1,4 @@
 import { combineReducers } from 'redux'
-import charactersReducer from './charactersReducer'
-import selectedCharacterReducer from './selectedCharacterReducer'
 
 const getCharacters = (state = [], action) => {
     switch (action.type) {
@@ -20,9 +18,6 @@ const getSpaceships = (state = [], action) => {
     }
 }
 
-
-
-
 const selectedCharacter = (state = null, action) => {
     switch (action.type) {
         case 'SELECTED_CHARACTER':
@@ -39,13 +34,17 @@ const currentPage = (page = 1, action) => {
         case 'NEXT_PAGE': 
             return page + 1
         case 'PREVIOUS_PAGE':
-            return page - 1
+            if (page = 0) {
+                return page 
+            } else {
+                return page + 1
+            }
         default: 
             return page
     }
 }
 
-const itemsPerPage = (page = 20, action) => {
+const itemsPerPage = (page = 9, action) => {
     switch (action.type) {
         case 'ITEMS_PER_PAGE':
             return page

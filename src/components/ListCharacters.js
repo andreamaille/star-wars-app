@@ -1,9 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { fetchCharacters, selectCharacter, retrieveItems, nextPage, previousPage, fetchSpaceships } from '../actions'
-import CharacterView from './CharacterView'
+/** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
+import Preloader from './Preloader.js'
+
 
 class ListCharacters extends Component {
     componentDidMount() {
@@ -11,13 +13,13 @@ class ListCharacters extends Component {
         this.props.fetchSpaceships()
     }
 
-    splicer(array, element, index) {
+    spliceArray = (array, element, index) => {
         array.splice(index * 8 - 1, 0, element)
         return array
     }
 
-    weave(array1, array2) {
-        return array1.reduce(this.splicer, array2.slice())
+    combineArray = (array1, array2) => {
+        return array1.reduce(this.spliceArray, array2.slice())
     }
 
     renderList() {
@@ -28,10 +30,10 @@ class ListCharacters extends Component {
             itemsPerPage
         } = this.props 
 
-        let completeList = this.weave(spaceships, characters)
+        let completeList = this.combineArray(spaceships, characters)
 
-        const indexOfLastItem = currentPage * itemsPerPage
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage
+        const indexOfLastItem = currentPage * itemsPerPage // 10
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage // 0
         const currentItems = completeList.slice(indexOfFirstItem, indexOfLastItem)
 
         return currentItems.map((item, index) => {
@@ -39,23 +41,26 @@ class ListCharacters extends Component {
             
             if (!item.birth_year) {
                 return (
-                    <div className="spaceship" key={item.model}>
-                        <h2>{item.name}</h2>
+                    <div css={listItem} key={item.model}>
+                        <h2 css={title}>🚀🚀 {item.name} 🚀🚀</h2>
                     </div>
                 )
             } else {
                 return (
-                    <div className="character-profile" key={item.url}>
-                        <div className="character-info">
+                    <div  key={item.url}>
+                        <div css={listItem} className="character-info">
                             <Link
                                 to={`/characters/${key}`}
+                                css={characterName}
                                 onClick={() => this.props.selectCharacter(item)}
                             >
                                 <h3>{item.name}</h3>
                             </Link>
-                            <p>Birth Year: {item.birth_year}</p>
-                            <p>Height: {item.height}</p>
-                            <p>Mass: {item.mass}</p>
+                            <ul css={characterStats}>
+                                <li css={statItem}>🎂 Birth Year: {item.birth_year}</li>
+                                <li css={statItem}>⚡️ Height: {item.height}</li>
+                                <li css={statItem}>⚖️ Mass: {item.mass}</li>
+                            </ul>
                         </div>
                     </div>
                 )
@@ -65,11 +70,17 @@ class ListCharacters extends Component {
 
     render() {
         return (
-            <main>
-                {this.renderList()}
-                <button onClick={() => this.props.previousPage()}>Previous</button>
-                <button onClick={() => this.props.nextPage()}>Next</button>
-            </main>
+            <div >
+                {!this.props.characters.length || !this.props.spaceships ? <Preloader /> :
+                    <div css={mainContent}>
+                        <div>{this.renderList()}</div>
+                        <div css={buttonContainer}>
+                            <button css={button} onClick={() => this.props.previousPage()}>Previous</button>
+                            <button css={button} onClick={() => this.props.nextPage()}>Next</button>
+                        </div>
+                    </div>
+                }
+            </div>
         )
     }
 }
@@ -93,3 +104,60 @@ export default connect(
         previousPage, 
     }
     )(ListCharacters)
+
+
+// Style
+const mainContent = css({
+    margin: '25px 0',
+    width: '100%',
+    backgroundColor: '#1c1f22',
+    border: '3px solid #000000',
+    fontFamily: 'Ariel, sans-serif'
+})
+
+const listItem = css({
+    width: '85%',
+    margin: '0 auto',
+    padding: '25px',
+    borderBottom: '2px solid #000000'
+})
+
+const characterName = css({
+    fontSize: '25px',
+    margin: '0',
+    color: '#ffdf1d',
+    textDecoration: 'none'
+})
+
+const characterStats = css({
+    margin: '0',
+    padding: '0',
+    listStyleType: 'none',
+    display: 'flex'
+})
+
+const statItem = css({
+    width: 'calc(100% / 3)',
+    margin: '0',
+    padding: '0',
+    listStyleType: 'none'
+})
+
+const title = css({
+    textAlign: 'center',
+    fontSize: '30px'
+})
+
+const buttonContainer = css({
+    width:'50%',
+    margin: '0 auto',
+    padding: '20px 0'
+})
+
+const button = css({
+    padding: '10px',
+    width:'calc(100% / 2)',
+    color: '#1c1f22',
+    border: '2px solid #1c1f22',
+    backgroundColor: '#ffdf1d'
+})
