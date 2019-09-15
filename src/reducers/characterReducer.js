@@ -1,6 +1,6 @@
-export default (state = null, action) => {
+export default (state = [], action) => {
     switch (action.type) {
-        case 'SELECTED_CHARACTER':
+        case 'FETCH_CHARACTERS':
             return action.payload
         default:
             return state

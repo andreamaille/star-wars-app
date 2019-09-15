@@ -76,7 +76,6 @@ export const getPagination = (array) => {
     }
 }
 
-
 export const totalPages = (array) => {
     return {
         type: 'TOTAL_PAGES',

@@ -14,7 +14,7 @@ const App = () => {
             <Router>
                 <div css={wrapper}>
                     <Header />
-                    <Route exact path="/" component={ListCharacters} />
+                    <Route exact path="/" render={() => <ListCharacters/>}></Route>
                     <Route path="/:name" component={CharacterView} />
                 </div>
             </Router>

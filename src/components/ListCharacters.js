@@ -77,9 +77,9 @@ class ListCharacters extends Component {
 
     render() {
         return (
-            <div >
+            <div>
                 {!this.props.characters.length || !this.props.spaceships.length ? <Preloader /> :
-                    <div css={mainContent}>
+                    <div css={mainContent} >
                         <div>{this.renderList()}</div>
                         <Buttons />
                     </div>

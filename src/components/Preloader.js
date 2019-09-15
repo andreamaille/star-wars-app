@@ -12,7 +12,7 @@ const Preloader = () => {
                 color="#ffdf1d"
                 height={150}
                 width={150}
-                timeout={3000}
+                timeout={20000}
             />
         </div>
     )
