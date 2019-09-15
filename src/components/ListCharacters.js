@@ -32,6 +32,7 @@ class ListCharacters extends Component {
             itemsPerPage
         } = this.props 
 
+
         const completeList = this.combineArray(spaceships, characters)
 
         this.props.totalPages(completeList)
@@ -78,7 +79,7 @@ class ListCharacters extends Component {
     render() {
         return (
             <div>
-                {!this.props.characters.length || !this.props.spaceships.length ? <Preloader /> :
+                {!this.props.characters.length ? <Preloader /> :
                     <div css={mainContent} >
                         <div>{this.renderList()}</div>
                         <Buttons />

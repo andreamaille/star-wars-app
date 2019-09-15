@@ -1,4 +1,9 @@
+import React from 'react'
 import { getCharacters, getSpaceships } from "../apis/swapi";
+
+import Swal from 'sweetalert2'
+import withReactContent from 'sweetalert2-react-content'
+const swal = withReactContent(Swal)
 
 export const fetchCharacters = () => async (dispatch) => {
     let characters = []
@@ -15,17 +20,23 @@ export const fetchCharacters = () => async (dispatch) => {
                     item
                 ]
             }
-        })
-        .catch(error => {
-            console.error('Failing to fetch characters from API')
-            console.error(`Yo Andy, remember your internet goes out all the time so why don't you check there first`)
-        })
-    )) 
 
-    dispatch({
-        type: 'FETCH_CHARACTERS',
-        payload: characters
+            dispatch({
+                type: 'FETCH_CHARACTERS',
+                payload: characters
+            })
+        })
+    )).catch(error => {
+        
+        if (!characters.length) {
+            swal.fire({
+                type: 'error',
+                text: `Sorry! We can't get Star Wars characters at this time. Check back later!`
+            })
+        }
     })
+
+    
 
 }
 
@@ -39,7 +50,10 @@ export const fetchSpaceships = () => async (dispatch) => {
             })
         })
         .catch(error => {
-            console.error('Failing to fetch spaceships from API')
+            swal.fire({
+                type: 'error',
+                text: `Thanks for visiting! We usually have spaceships 🚀 around here but they're on a mission. Check back later to see if they've come back! `
+            })
         })
 }
 

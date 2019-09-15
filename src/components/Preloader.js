@@ -3,7 +3,6 @@ import React from 'react'
 import { jsx, css } from '@emotion/core'
 import Loader from 'react-loader-spinner'
 
-
 const Preloader = () => {
     return (
         <div css={preloader}>
@@ -20,11 +19,7 @@ const Preloader = () => {
 
 export default Preloader
 
-
-
-
 // Style
-
 const preloader = css({
     textAlign: 'center'
 })
