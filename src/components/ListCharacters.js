@@ -1,13 +1,17 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { fetchCharacters, selectCharacter, fetchSpaceships, getPagination, totalPages } from '../actions'
-/** @jsx jsx */
-import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
+
+import { fetchCharacters, selectCharacter, fetchSpaceships, totalPages } from '../actions'
 import Preloader from './Preloader.js'
 import Buttons from './Buttons.js'
 
+/** @jsx jsx */
+import { jsx, css } from '@emotion/core'
+
+
 class ListCharacters extends Component {
+
     componentDidMount() {
         if (!this.props.characters.length) {
             this.props.fetchCharacters()
@@ -26,37 +30,40 @@ class ListCharacters extends Component {
 
     renderList() {
         const {
-            characters, 
-            spaceships, 
-            currentPage, 
+            characters,
+            spaceships,
+            currentPage,
             itemsPerPage
-        } = this.props 
+        } = this.props
 
+        // get a combined list of characters where spaceship is every 8th list item
+        const combinedList = this.combineArray(spaceships, characters)
 
-        const completeList = this.combineArray(spaceships, characters)
+        // call action to update total number of pages in redux based on combined array
+        this.props.totalPages(combinedList)
 
-        this.props.totalPages(completeList)
+        // determines what items of the array should be displayed on each page
+        const indexOfLastItem = currentPage * itemsPerPage
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage
 
-        //Pagination
-        const indexOfLastItem = currentPage * itemsPerPage 
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage 
-        const currentItems = completeList.slice(indexOfFirstItem, indexOfLastItem)
-
+        const currentItems = combinedList.slice(indexOfFirstItem, indexOfLastItem)
 
         return currentItems.map((item) => {
+            // unique key for url route
             const key = item.name.replace(/\s+/g, '')
 
+            // rendering for spaceships 
             if (!item.birth_year) {
                 return (
                     <div css={listItem} key={item.model}>
                         <h2 css={title}>🚀🚀 {item.name} 🚀🚀</h2>
                     </div>
                 )
-
             } else {
+                // rendering for characters
                 return (
-                    <div  key={item.url}>
-                        <div css={listItem} className="character-info">
+                    <div key={key}>
+                        <div css={listItem}>
                             <Link
                                 to={`/${key}`}
                                 css={characterName}
@@ -80,10 +87,12 @@ class ListCharacters extends Component {
         return (
             <div>
                 {!this.props.characters.length ? <Preloader /> :
-                    <div css={mainContent} >
-                        <div>{this.renderList()}</div>
-                        <Buttons />
-                    </div>
+                    <main css={mainContent} >
+                        <section>
+                            {this.renderList()}
+                            <Buttons />
+                        </section>
+                    </main>
                 }
             </div>
         )
@@ -94,8 +103,8 @@ const mapStateToProps = (state) => {
     return {
         characters: state.characters,
         spaceships: state.spaceships,
-        currentPage: state.currentPagination.currentPage,
-        itemsPerPage: state.currentPagination.itemsPerPage
+        currentPage: state.pagination.currentPage,
+        itemsPerPage: state.pagination.itemsPerPage
     }
 }
 
@@ -104,12 +113,9 @@ export default connect(
     {   fetchCharacters, 
         selectCharacter,
         fetchSpaceships,
-        getPagination,
         totalPages
     }
     )(ListCharacters)
-
-
 
 
 // Style

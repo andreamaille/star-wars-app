@@ -1,6 +1,5 @@
-import React from 'react'
 import { getCharacters, getSpaceships } from "../apis/swapi";
-
+// Sweet Alerts
 import Swal from 'sweetalert2'
 import withReactContent from 'sweetalert2-react-content'
 const swal = withReactContent(Swal)
@@ -20,14 +19,12 @@ export const fetchCharacters = () => async (dispatch) => {
                     item
                 ]
             }
-
             dispatch({
                 type: 'FETCH_CHARACTERS',
                 payload: characters
             })
         })
     )).catch(error => {
-        
         if (!characters.length) {
             swal.fire({
                 type: 'error',
@@ -35,9 +32,6 @@ export const fetchCharacters = () => async (dispatch) => {
             })
         }
     })
-
-    
-
 }
 
 export const fetchSpaceships = () => async (dispatch) => {
@@ -64,10 +58,9 @@ export const selectCharacter = (character) => {
     }
 }
 
-export const currentPage = (page) => {
+export const getPagination = () => {
     return {
-        type: 'CURRENT_PAGE',
-        payload: page
+        type: 'UPDATE_PAGINATION'
     }
 }
 
@@ -80,13 +73,6 @@ export const nextPage = () => {
 export const previousPage = () => {
     return {
         type: 'PREVIOUS_PAGE'
-    }
-}
-
-export const getPagination = (array) => {
-    return {
-        type: 'UPDATE_PAGINATION',
-        payload: array
     }
 }
 

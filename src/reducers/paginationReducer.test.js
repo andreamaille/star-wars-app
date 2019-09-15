@@ -3,6 +3,7 @@ import paginationReducer from "./paginationReducer";
 describe('Pagination Reducer', () => {
     it('should return default pagination settings', () => {
         const newState = paginationReducer(undefined, {})
+
         expect(newState).toEqual({
             currentPage: 1,
             itemsPerPage: 10
@@ -82,5 +83,4 @@ describe('Pagination Reducer', () => {
             totalPages: 2
         })
     })
-
 })

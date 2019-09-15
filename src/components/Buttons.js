@@ -1,21 +1,21 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { nextPage, previousPage } from '../actions'
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 
-
 class Buttons extends Component { 
     render() {
+        const {
+            currentPage,
+            totalPages,
+        } = this.props 
+
         return (
             <div css={buttonContainer}>
-                {this.props.currentPage === 1 ? null : 
-                    <button css={button} onClick={() => this.props.previousPage()}>Previous</button>
-                }
-                
-                {this.props.totalPages === this.props.currentPage ? null :
-                    <button css={button} onClick={() => this.props.nextPage()}>Next</button>
-                }
+                <button css={currentPage === 1 ? inactive : button} onClick={() => this.props.previousPage()}>Previous</button>
+                <button css={totalPages === currentPage ? inactive : button} onClick={() => this.props.nextPage()}>Next</button>
             </div>
         )
     }
@@ -23,23 +23,16 @@ class Buttons extends Component {
 
 const mapStateToProps = (state) => {
     return {
-        characters: state.characters,
-        spaceships: state.spaceships,
-        currentPage: state.currentPagination.currentPage,
-        itemsPerPage: state.currentPagination.itemsPerPage,
-        totalPages: state.currentPagination.totalPages,
+        currentPage: state.pagination.currentPage,
+        itemsPerPage: state.pagination.itemsPerPage,
+        totalPages: state.pagination.totalPages
     }
 }
 
-export default connect(
-    mapStateToProps,
-    {
-        nextPage,
-        previousPage,
-    }
-)(Buttons)
+export default connect(mapStateToProps, { nextPage, previousPage })(Buttons)
 
 
+// Style
 const buttonContainer = css({
     width: '50%',
     textAlign: 'center',
@@ -54,4 +47,13 @@ const button = css({
     color: '#1c1f22',
     border: '2px solid #1c1f22',
     backgroundColor: '#ffdf1d'
+})
+
+const inactive= css({
+    cursor: 'default',
+    padding: '10px',
+    width: 'calc(100% / 2)',
+    color: '#1c1f22',
+    border: '2px solid #1c1f22',
+    backgroundColor: 'lightyellow'
 })

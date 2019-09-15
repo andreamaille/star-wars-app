@@ -1,9 +1,9 @@
 import React from 'react'
 import { connect } from 'react-redux'
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
-
 
 const CharacterView = ({ character }) => {
     return (
@@ -15,11 +15,7 @@ const CharacterView = ({ character }) => {
                 <li css={statItem}>💇‍♀️ Hair Color: {character.hair_color}</li>
                 <li css={statItem}>🎨 Skin Color: {character.skin_color}</li>
             </ul>
-            <Link
-                to="/" exact
-            >
-                <p css={button}>Go back to Main List</p>
-            </Link>
+            <Link to="/" exact><p css={button}>Go back to Main List</p></Link>
         </div>
     )
 }

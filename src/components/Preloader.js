@@ -1,7 +1,8 @@
 import React from 'react'
+import Loader from 'react-loader-spinner'
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-import Loader from 'react-loader-spinner'
 
 const Preloader = () => {
     return (

@@ -1,33 +1,36 @@
 export default (state = {}, action) => {
+    const pages = {...state}
+
     switch (action.type) {
         case 'UPDATE_PAGINATION':
             return state
-
+            
         case 'NEXT_PAGE':
-            const page = { ...state }
-
-            return {
-                ...state,
-                currentPage: page.currentPage + 1
-            }
-        case 'PREVIOUS_PAGE':
-            const currentPage = { ...state }
-
-            if (currentPage.currentPage === 1) {
+            if (pages.totalPages === pages.currentPage) {
                 return {
                     ...state,
-                    currentPage: currentPage.currentPage
+                    currentPage: pages.currentPage
                 }
             } else {
                 return {
                     ...state,
-                    currentPage: currentPage.currentPage - 1
+                    currentPage: pages.currentPage + 1
+                }
+            }
+        case 'PREVIOUS_PAGE':
+            if (pages.currentPage === 1) {
+                return {
+                    ...state,
+                    currentPage: pages.currentPage
+                }
+            } else {
+                return {
+                    ...state,
+                    currentPage: pages.currentPage - 1
                 }
             }
         case 'TOTAL_PAGES': {
-            const currentPages = { ...state }
-
-            const total = Math.floor(action.payload.length / currentPages.itemsPerPage)
+            const total = Math.floor(action.payload.length / pages.itemsPerPage)
 
             return {
                 ...state,

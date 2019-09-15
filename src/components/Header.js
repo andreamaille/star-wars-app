@@ -1,4 +1,5 @@
 import React from 'react'
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 
@@ -13,6 +14,8 @@ const Header = () => {
 
 export default Header
 
+
+// Style
 const header = css({
     height: '30vh',
     margin: '25px 0',

@@ -1,7 +1,7 @@
 import React from 'React'
 import { shallow } from 'enzyme'
 import Header from './Header.js'
-import { findByTestAttribute } from './../../Utilities'
+import { findByTestAttribute } from '../../testing'
 
 const setUp = (props={}) => {
     const component = shallow(<Header {...props}/>)
@@ -24,5 +24,4 @@ describe('Header Component', () => {
         const wrapper = findByTestAttribute(component, 'title')
         expect(wrapper.length).toBe(1)
     })
-
 })  
