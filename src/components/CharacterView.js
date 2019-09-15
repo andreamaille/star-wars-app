@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
-import ListCharacters from './ListCharacters';
+
 
 const CharacterView = ({ character }) => {
     return (

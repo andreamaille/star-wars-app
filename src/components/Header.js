@@ -4,8 +4,8 @@ import { jsx, css } from '@emotion/core'
 
 const Header = () => {
     return (
-        <header css={header}>
-            <h1 css={h1}>Star Wars</h1>
+        <header css={header} data-test='header'>
+            <h1 css={h1} data-test='title'>Star Wars</h1>
             <h2 css={h2}>✨Characters from the series✨</h2>
         </header>
     )

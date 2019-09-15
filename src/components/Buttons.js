@@ -55,11 +55,3 @@ const button = css({
     border: '2px solid #1c1f22',
     backgroundColor: '#ffdf1d'
 })
-
-const buttonInactive = css({
-    padding: '10px',
-    width: 'calc(100% / 2)',
-    color: '#1c1f22',
-    border: '2px solid #1c1f22',
-    backgroundColor: '#ffdf1d'
-})

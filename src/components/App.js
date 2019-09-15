@@ -1,29 +1,30 @@
 import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 import Header from './Header'
 import ListCharacters from './ListCharacters'
 import CharacterView from './CharacterView'
-import { BrowserRouter, Route } from 'react-router-dom'
+
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
-
 
 const App = () => {
     return (
         <div>
-            <BrowserRouter>
+            <Router>
                 <div css={wrapper}>
                     <Header />
                     <Route exact path="/" component={ListCharacters} />
-                    <Route path="/characters/:name" component={CharacterView} />
+                    <Route path="/:name" component={CharacterView} />
                 </div>
-            </BrowserRouter>
+            </Router>
         </div>
     )
 }
 
 export default App
 
-
+// Style
 const wrapper = css({
     margin: '0 auto',
     width: '85%'

@@ -37,13 +37,9 @@ class ListCharacters extends Component {
         this.props.totalPages(completeList)
 
         //Pagination
-        const indexOfLastItem = currentPage * itemsPerPage // 10
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage // 0
+        const indexOfLastItem = currentPage * itemsPerPage 
+        const indexOfFirstItem = indexOfLastItem - itemsPerPage 
         const currentItems = completeList.slice(indexOfFirstItem, indexOfLastItem)
-
-
-
-
 
 
         return currentItems.map((item) => {
@@ -61,7 +57,7 @@ class ListCharacters extends Component {
                     <div  key={item.url}>
                         <div css={listItem} className="character-info">
                             <Link
-                                to={`/characters/${key}`}
+                                to={`/${key}`}
                                 css={characterName}
                                 onClick={() => this.props.selectCharacter(item)}
                             >

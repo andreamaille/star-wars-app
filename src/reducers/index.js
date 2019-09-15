@@ -36,6 +36,7 @@ const updatePagination = (state = {}, action) => {
 
         case 'NEXT_PAGE': 
             const page = {...state}
+            
             return {
                 ...state,
                 currentPage: page.currentPage + 1
