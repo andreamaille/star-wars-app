@@ -4,7 +4,6 @@ export default (state = {}, action) => {
     switch (action.type) {
         case 'UPDATE_PAGINATION':
             return state
-            
         case 'NEXT_PAGE':
             if (pages.totalPages === pages.currentPage) {
                 return {
@@ -32,9 +31,15 @@ export default (state = {}, action) => {
         case 'TOTAL_PAGES': {
             const total = Math.floor(action.payload.length / pages.itemsPerPage)
 
+            const indexOfLastItem = pages.currentPage * pages.itemsPerPage
+
+            const indexOfFirstItem = indexOfLastItem - pages.itemsPerPage
+
             return {
                 ...state,
-                totalPages: total
+                totalPages: total,
+                firstItem: indexOfFirstItem,
+                lastItem: indexOfLastItem
             }
         }
         default:

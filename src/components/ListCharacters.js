@@ -9,9 +9,7 @@ import Buttons from './Buttons.js'
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 
-
 class ListCharacters extends Component {
-
     componentDidMount() {
         if (!this.props.characters.length) {
             this.props.fetchCharacters()
@@ -19,8 +17,8 @@ class ListCharacters extends Component {
         }
     }
 
-    spliceArray = (array, element, index) => {
-        array.splice(index * 8 - 1, 0, element)
+    spliceArray = (array, curVal, index) => {
+        array.splice(index * 8 - 1, 0, curVal)
         return array
     }
 
@@ -28,35 +26,35 @@ class ListCharacters extends Component {
         return array1.reduce(this.spliceArray, array2.slice())
     }
 
-    renderList() {
+    renderList = () => {
         const {
             characters,
             spaceships,
-            currentPage,
-            itemsPerPage
+            firstItem, 
+            lastItem
         } = this.props
 
         // get a combined list of characters where spaceship is every 8th list item
-        const combinedList = this.combineArray(spaceships, characters)
+        const getSpaceshipsAndCharacters = this.combineArray(spaceships, characters)
 
         // call action to update total number of pages in redux based on combined array
-        this.props.totalPages(combinedList)
+        this.props.totalPages(getSpaceshipsAndCharacters)
 
-        // determines what items of the array should be displayed on each page
-        const indexOfLastItem = currentPage * itemsPerPage
-        const indexOfFirstItem = indexOfLastItem - itemsPerPage
-
-        const currentItems = combinedList.slice(indexOfFirstItem, indexOfLastItem)
+        const currentItems = getSpaceshipsAndCharacters.slice(firstItem, lastItem)
 
         return currentItems.map((item) => {
             // unique key for url route
-            const key = item.name.replace(/\s+/g, '')
+            const key = item.name.replace(/\s+/g, '_')
 
-            // rendering for spaceships 
             if (!item.birth_year) {
+                // rendering for spaceships 
                 return (
                     <div css={listItem} key={item.model}>
-                        <h2 css={title}>🚀🚀 {item.name} 🚀🚀</h2>
+                        <h2 css={title}>
+                            <span role='img' aria-label='spaceship emoji'>🚀🚀</span>
+                            {item.name} 
+                            <span role='img' aria-label='spaceship emoji'>🚀🚀</span>
+                        </h2>
                     </div>
                 )
             } else {
@@ -72,9 +70,18 @@ class ListCharacters extends Component {
                                 <h3>{item.name}</h3>
                             </Link>
                             <ul css={characterStats}>
-                                <li css={statItem}>🎂 Birth Year: {item.birth_year}</li>
-                                <li css={statItem}>⚡️ Height: {item.height}</li>
-                                <li css={statItem}>⚖️ Mass: {item.mass}</li>
+                                <li css={statItem}>
+                                    <span role='img' aria-label='birthday cake emoji'>🎂</span>
+                                    Birth Year: {item.birth_year}
+                                </li>
+                                <li css={statItem}>
+                                    <span role='img' aria-label='thunderbolt emoji'>⚡️</span>
+                                    Height: {item.height}
+                                </li>
+                                <li css={statItem}>
+                                    <span role='img' aria-label='balance scale emoji'>⚖️</span>
+                                    Mass: {item.mass}
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -87,7 +94,7 @@ class ListCharacters extends Component {
         return (
             <div>
                 {!this.props.characters.length ? <Preloader /> :
-                    <main css={mainContent} >
+                    <main css={mainContent}>
                         <section>
                             {this.renderList()}
                             <Buttons />
@@ -104,7 +111,9 @@ const mapStateToProps = (state) => {
         characters: state.characters,
         spaceships: state.spaceships,
         currentPage: state.pagination.currentPage,
-        itemsPerPage: state.pagination.itemsPerPage
+        itemsPerPage: state.pagination.itemsPerPage,
+        firstItem: state.pagination.firstItem,
+        lastItem: state.pagination.lastItem
     }
 }
 

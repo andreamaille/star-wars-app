@@ -1,19 +1,32 @@
-import React from 'react'
 import { connect } from 'react-redux'
+import { fetchCharacters, selectCharacter } from '../actions'
 
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 import { Link } from 'react-router-dom'
 
-const CharacterView = ({ character }) => {
+
+const CharacterView = ({character}) => {
     return (
         <div css={mainContent}>
             <p css={title}>Character Details for {character.name}</p>
             <ul css={characterStats}>
-                <li css={statItem}>👁 Eye Color: {character.eye_color}</li>
-                <li css={statItem}>✨ Gender: {character.gender}</li>
-                <li css={statItem}>💇‍♀️ Hair Color: {character.hair_color}</li>
-                <li css={statItem}>🎨 Skin Color: {character.skin_color}</li>
+                <li css={statItem}>
+                    <span role='img' aria-label='eye emoji'>👁</span>
+                    Eye Color: {character.eye_color}
+                </li>
+                <li css={statItem}>
+                    <span role='img' aria-label='stars emoji'>✨</span>
+                    Gender: {character.gender}
+                </li>
+                <li css={statItem}>
+                    <span role='img' aria-label='women getting haircut emoji'> 💇‍♀️ </span>
+                    Hair Color: {character.hair_color}
+                </li>
+                <li css={statItem}>
+                    <span role='img' aria-label='paint palette emoji'>🎨</span>
+                    Skin Color: {character.skin_color}
+                </li>
             </ul>
             <Link to="/" exact><p css={button}>Go back to Main List</p></Link>
         </div>
@@ -22,11 +35,13 @@ const CharacterView = ({ character }) => {
 
 const mapStateToProps = (state) => {
     return {
+        characters: state.characters,
+        spaceships: state.spaceships,
         character: state.selectedCharacter
     }
 }
 
-export default connect(mapStateToProps)(CharacterView)
+export default connect(mapStateToProps, { fetchCharacters, selectCharacter })(CharacterView)
 
 
 // Style

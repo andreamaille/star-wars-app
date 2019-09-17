@@ -1,5 +1,3 @@
-import React from 'react'
-
 /** @jsx jsx */
 import { jsx, css } from '@emotion/core'
 
@@ -7,13 +5,16 @@ const Header = () => {
     return (
         <header css={header} data-test='header'>
             <h1 css={h1} data-test='title'>Star Wars</h1>
-            <h2 css={h2}>✨Characters from the series✨</h2>
+            <h2 css={h2}>
+                <span role='img' aria-label='stars emoji'>✨</span>
+                Characters from the series
+                <span role='img' aria-label='stars emoji'>✨</span>
+            </h2>
         </header>
     )
 }
 
 export default Header
-
 
 // Style
 const header = css({

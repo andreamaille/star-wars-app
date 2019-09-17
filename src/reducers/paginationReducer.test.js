@@ -80,7 +80,9 @@ describe('Pagination Reducer', () => {
         expect(newState).toEqual({
             currentPage: 1,
             itemsPerPage: 10,
-            totalPages: 2
+            totalPages: 2,
+            firstItem: 0,
+            lastItem: 10
         })
     })
 })
