@@ -40,13 +40,18 @@ const buttonContainer = css({
     padding: '20px 0'
 })
 
+const lightYellow = css({
+    backgroundColor: '#f7ef99'
+})
+
 const button = css({
     cursor: 'pointer',
     padding: '10px',
     width: 'calc(100% / 2)',
     color: '#1c1f22',
     border: '2px solid #1c1f22',
-    backgroundColor: '#ffdf1d'
+    backgroundColor: '#ffdf1d',
+    ':hover,:focus,:active': lightYellow
 })
 
 const inactive= css({
@@ -55,5 +60,5 @@ const inactive= css({
     width: 'calc(100% / 2)',
     color: '#1c1f22',
     border: '2px solid #1c1f22',
-    backgroundColor: 'lightyellow'
+    backgroundColor: '#c8c8c8'
 })

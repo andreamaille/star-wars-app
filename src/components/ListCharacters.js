@@ -143,11 +143,16 @@ const listItem = css({
     borderBottom: '2px solid #000000'
 })
 
+const lightYellow = css({
+    color: '#f7ef99'
+})
+
 const characterName = css({
     fontSize: '25px',
     margin: '0',
     color: '#ffdf1d',
-    textDecoration: 'none'
+    textDecoration: 'none',
+    ':hover,:focus,:active': lightYellow
 })
 
 const characterStats = css({

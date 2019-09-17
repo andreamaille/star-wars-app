@@ -9,26 +9,26 @@ import { Link } from 'react-router-dom'
 const CharacterView = ({character}) => {
     return (
         <div css={mainContent}>
-            <p css={title}>Character Details for {character.name}</p>
+            <p css={title} tabIndex='3'>Character Details for {character.name}</p>
             <ul css={characterStats}>
-                <li css={statItem}>
+                <li css={statItem} tabIndex='4'>
                     <span role='img' aria-label='eye emoji'>👁</span>
                     Eye Color: {character.eye_color}
                 </li>
-                <li css={statItem}>
+                <li css={statItem} tabIndex='5'>
                     <span role='img' aria-label='stars emoji'>✨</span>
                     Gender: {character.gender}
                 </li>
-                <li css={statItem}>
+                <li css={statItem} tabIndex='6'>
                     <span role='img' aria-label='women getting haircut emoji'> 💇‍♀️ </span>
                     Hair Color: {character.hair_color}
                 </li>
-                <li css={statItem}>
+                <li css={statItem }tabIndex='7'>
                     <span role='img' aria-label='paint palette emoji'>🎨</span>
                     Skin Color: {character.skin_color}
                 </li>
             </ul>
-            <Link to="/" exact><p css={button}>Go back to Main List</p></Link>
+            <Link to="/" exact css={button}><p tabIndex='8'>Go back to Main List</p></Link>
         </div>
     )
 }
@@ -71,13 +71,19 @@ const mainContent = css({
     fontFamily: 'Ariel, sans-serif'
 })
 
+const lightYellow = css({
+    backgroundColor: '#f7ef99'
+})
+
 const button = css({
     width: '25%',
     display: 'block',
     margin: '20px auto',
+    textDecoration: 'none',
     textAlign: 'center',
     padding: '10px',
     color: '#1c1f22',
     border: '2px solid #1c1f22',
-    backgroundColor: '#ffdf1d'
+    backgroundColor: '#ffdf1d',
+    ':hover,:focus,:active': lightYellow
 })
