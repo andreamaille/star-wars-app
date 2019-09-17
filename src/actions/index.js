@@ -76,13 +76,3 @@ export const totalPages = (array) => {
         payload: array
     }
 }
-
-export const combineArray = (array1, array2) => {
-    return {
-        type: 'COMBINE_ARRAY',
-        payload: {
-            array1,
-            array2
-        }
-    }
-}

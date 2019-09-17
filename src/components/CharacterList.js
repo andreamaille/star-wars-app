@@ -18,7 +18,7 @@ class ListCharacters extends Component {
     }
 
     spliceArray = (array, curVal, index) => {
-        array.splice(index * 8 - 1, 0, curVal)
+        array.splice(index * 9 - 1, 0, curVal)
         return array
     }
 
@@ -34,7 +34,7 @@ class ListCharacters extends Component {
             lastItem
         } = this.props
 
-        // get a combined list of characters where spaceship is every 8th item
+        // get a combined list of characters where spaceship is after 8th character
         const getSpaceshipsAndCharacters = this.combineArray(spaceships, characters)
 
         // call action to update total number of pages in redux based on combined array
@@ -50,18 +50,18 @@ class ListCharacters extends Component {
             if (!item.birth_year) {
                 // rendering for spaceships 
                 return (
-                    <div css={listItem} key={item.model}>
+                    <li css={listItem} key={item.model}>
                         <h2 css={title}>
                             <span role='img' aria-label='spaceship emoji'>🚀🚀</span>
                             {item.name} 
                             <span role='img' aria-label='spaceship emoji'>🚀🚀</span>
                         </h2>
-                    </div>
+                    </li>
                 )
             } else {
                 // rendering for characters
                 return (
-                    <div key={key}>
+                    <li key={key} css={list}>
                         <div css={listItem}>
                             <Link
                                 to={`/${key}`}
@@ -85,7 +85,7 @@ class ListCharacters extends Component {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </li>
                 )
             }
         })
@@ -97,7 +97,9 @@ class ListCharacters extends Component {
                 {!this.props.characters.length ? <Preloader /> :
                     <main css={mainContent}>
                         <section>
-                            {this.renderList()}
+                            <ul css={list}>
+                                {this.renderList()}
+                            </ul>
                             <Buttons />
                         </section>
                     </main>
@@ -135,6 +137,12 @@ const mainContent = css({
     backgroundColor: '#1c1f22',
     border: '3px solid #000000',
     fontFamily: 'Ariel, sans-serif'
+})
+
+const list = css({
+    margin: '0',
+    padding: '0',
+    listStyleType: 'none'
 })
 
 const listItem = css({

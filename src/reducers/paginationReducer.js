@@ -43,7 +43,10 @@ export default (state = {}, action) => {
         default:
             return {
                 currentPage: 1,
-                itemsPerPage: 10
+                itemsPerPage: 10,
+                totalPages: 0,
+                firstItem: 0,
+                lastItem: 0
             }
     }
 }
