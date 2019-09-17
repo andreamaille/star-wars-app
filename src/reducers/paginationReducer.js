@@ -2,8 +2,6 @@ export default (state = {}, action) => {
     const pages = {...state}
 
     switch (action.type) {
-        case 'UPDATE_PAGINATION':
-            return state
         case 'NEXT_PAGE':
             if (pages.totalPages === pages.currentPage) {
                 return {

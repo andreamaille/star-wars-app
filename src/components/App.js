@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 
 import Header from './Header'
-import ListCharacters from './ListCharacters'
+import CharacterList from './CharacterList'
 import CharacterView from './CharacterView'
 
 /** @jsx jsx */
@@ -10,11 +10,11 @@ import { jsx, css } from '@emotion/core'
 const App = () => {
     return (
         <div>
-            <Router>
+            <Router basename={process.env.PUBLIC_URL}>
                 <div css={wrapper}>
                     <Header />
-                    <Route exact path="/" component={ListCharacters}/>
-                    <Route path="/:name" component={CharacterView} />
+                    <Route exact path="/" component={CharacterList}/>
+                    <Route exact path="/:name" component={CharacterView} />
                 </div>
             </Router>
         </div>

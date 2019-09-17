@@ -34,12 +34,13 @@ class ListCharacters extends Component {
             lastItem
         } = this.props
 
-        // get a combined list of characters where spaceship is every 8th list item
+        // get a combined list of characters where spaceship is every 8th item
         const getSpaceshipsAndCharacters = this.combineArray(spaceships, characters)
 
         // call action to update total number of pages in redux based on combined array
         this.props.totalPages(getSpaceshipsAndCharacters)
 
+        // current items to render on page
         const currentItems = getSpaceshipsAndCharacters.slice(firstItem, lastItem)
 
         return currentItems.map((item) => {

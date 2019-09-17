@@ -58,12 +58,6 @@ export const selectCharacter = (character) => {
     }
 }
 
-export const getPagination = () => {
-    return {
-        type: 'UPDATE_PAGINATION'
-    }
-}
-
 export const nextPage = () => {
     return {
         type: 'NEXT_PAGE'

@@ -6,6 +6,7 @@
     "@emotion/core": "^10.0.17",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
+    "gh-pages": "^2.1.1",
     "jest-enzyme": "^7.1.1",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
@@ -19,6 +20,8 @@
     "sweetalert2-react-content": "^1.1.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
@@ -38,5 +41,6 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  }
+  },
+  "homepage": "https://andreamaille.github.io/star-wars-app"
 }
